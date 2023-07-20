@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import { debug } from "console";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -17,11 +18,17 @@ export default function SignupPage() {
     try {
       setLoading(true);
       const res = await axios.post("/api/users/login", user);
-      console.log("Login Success", res.data);
-      toast.success("Login Success");
-      router.push("/profile");
+      console.log(res);
+      // console.log(res.message);
+      if (res.status === 400) {
+        throw new Error("Login failed");
+      } else {
+        console.log("Login Success", res.data);
+        toast.success("Login Success");
+        router.push("/profile");
+      }
     } catch (err: any) {
-      console.log("Login failed", err.message);
+      alert(err.message);
       toast.error(err.message);
     } finally {
       setLoading(false);
