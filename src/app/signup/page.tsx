@@ -9,6 +9,7 @@ interface ISignupForm {
   username: string;
   email: string;
   password: string;
+  changePassword: string;
 }
 
 export default function SignupPage() {
@@ -17,22 +18,11 @@ export default function SignupPage() {
       username: "",
       email: "",
       password: "",
+      changePassword: "",
     },
   });
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-
-  // useEffect(() => {
-  //   if (
-  //     user.email.length > 0 &&
-  //     user.password.length > 0 &&
-  //     user.username.length > 0
-  //   ) {
-  //     setButtonDisabled(false);
-  //   } else {
-  //     setButtonDisabled(true);
-  //   }
-  // }, [user]);
 
   const onSignup: SubmitHandler<ISignupForm> = async (data) => {
     try {
@@ -59,122 +49,113 @@ export default function SignupPage() {
             {loading ? "Processing" : "Signup"}
           </h2>
           <hr className="mb-4" />
-            <label htmlFor="username" className="flex mb-2 font-medium">
-              Username
-            </label>
-            <Controller
-              // ... rest of the Controller code for username input
-              control={control}
-              name="username"
-              rules={{
-                required: { value: true, message: "Username is required!" },
-                pattern: {
-                  value: /^[A-Za-z][A-Za-z0-9_]{7,29}$/,
-                  message: "Invalid Username",
-                },
-              }}
-              render={({
-                field: { onChange, value },
-                fieldState: { error },
-              }) => (
-                <>
-                  <input
-                    className="flex p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-300"
-                    type="text"
-                    value={value}
-                    onChange={onChange}
-                    placeholder="username"
-                  />
-                  <span>{error?.message}</span>
-                </>
-              )}
-            />
-            <label htmlFor="email" className="flex mt-2 mb-2 font-medium">
-              Email
-            </label>
-            <Controller
-              // ... rest of the Controller code for email input
-              control={control}
-              name="email"
-              rules={{
-                required: { value: true, message: "Email is required!" },
-                pattern: {
-                  value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                  message: "Invalid Email",
-                },
-              }}
-              render={({
-                field: { onChange, value },
-                fieldState: { error },
-              }) => (
-                <>
-                  <input
-                    className="flex p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-300"
-                    type="text"
-                    value={value}
-                    onChange={onChange}
-                    placeholder="email"
-                  />
-                  <span>{error?.message}</span>
-                </>
-              )}
-            />
-            <label htmlFor="password" className="flex mt-1 mb-2 font-medium">
-              Password
-            </label>
-            <Controller
-              // ... rest of the Controller code for password input
-              control={control}
-              name="password"
-              rules={{
-                required: { value: true, message: "Password is required!" },
-              }}
-              render={({
-                field: { onChange, value },
-                fieldState: { error },
-              }) => (
-                <>
-                  <input
-                    className="flex p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-300"
-                    type="text"
-                    value={value}
-                    onChange={onChange}
-                    placeholder="password"
-                  />
-                  <span>{error?.message}</span>
-                </>
-              )}
-            />
-            <label htmlFor="confirmPassword" className="flex mt-4 mb-2 font-medium">
-              Confirm Password
-            </label>
-            <Controller
-              // ... rest of the Controller code for confirmPassword input
-              control={control}
-              name="changePassword"
-              rules={{
-                required: { value: true, message: "Password is required!" },
-                validate: {
-                  checkPassword: (value) =>
-                    value === getValues("password") || "Password not match",
-                },
-              }}
-              render={({
-                field: { onChange, value },
-                fieldState: { error },
-              }) => (
-                <>
-                  <input
-                    className="flex p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-300"
-                    type="text"
-                    value={value}
-                    onChange={onChange}
-                    placeholder="password"
-                  />
-                  <span>{error?.message}</span>
-                </>
-              )}
-            />
+          <label htmlFor="username" className="flex mb-2 font-medium">
+            Username
+          </label>
+          <Controller
+            // ... rest of the Controller code for username input
+            control={control}
+            name="username"
+            rules={{
+              required: { value: true, message: "Username is required!" },
+              pattern: {
+                value: /^[A-Za-z][A-Za-z0-9_]{7,29}$/,
+                message: "Invalid Username",
+              },
+            }}
+            render={({ field: { onChange, value }, fieldState: { error } }) => (
+              <>
+                <input
+                  className="flex p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-300"
+                  type="text"
+                  value={value}
+                  onChange={onChange}
+                  placeholder="username"
+                />
+                <span>{error?.message}</span>
+              </>
+            )}
+          />
+          <label htmlFor="email" className="flex mt-2 mb-2 font-medium">
+            Email
+          </label>
+          <Controller
+            // ... rest of the Controller code for email input
+            control={control}
+            name="email"
+            rules={{
+              required: { value: true, message: "Email is required!" },
+              pattern: {
+                value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                message: "Invalid Email",
+              },
+            }}
+            render={({ field: { onChange, value }, fieldState: { error } }) => (
+              <>
+                <input
+                  className="flex p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-300"
+                  type="text"
+                  value={value}
+                  onChange={onChange}
+                  placeholder="email"
+                />
+                <span>{error?.message}</span>
+              </>
+            )}
+          />
+          <label htmlFor="password" className="flex mt-1 mb-2 font-medium">
+            Password
+          </label>
+          <Controller
+            // ... rest of the Controller code for password input
+            control={control}
+            name="password"
+            rules={{
+              required: { value: true, message: "Password is required!" },
+            }}
+            render={({ field: { onChange, value }, fieldState: { error } }) => (
+              <>
+                <input
+                  className="flex p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-300"
+                  type="text"
+                  value={value}
+                  onChange={onChange}
+                  placeholder="password"
+                />
+                <span>{error?.message}</span>
+              </>
+            )}
+          />
+          <label
+            htmlFor="confirmPassword"
+            className="flex mt-4 mb-2 font-medium"
+          >
+            Confirm Password
+          </label>
+          <Controller
+            // ... rest of the Controller code for confirmPassword input
+            control={control}
+            name="changePassword"
+            rules={{
+              required: { value: true, message: "Password is required!" },
+              validate: {
+                checkPassword: (value) =>
+                  value === getValues("password") || "Password not match",
+              },
+            }}
+            render={({ field: { onChange, value }, fieldState: { error } }) => (
+              <>
+                <input
+                  className="flex p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-300"
+                  type="text"
+                  value={value}
+                  onChange={onChange}
+                  placeholder="password"
+                />
+                <span>{error?.message}</span>
+              </>
+            )}
+          />
           <button
             type="submit"
             disabled={loading}
